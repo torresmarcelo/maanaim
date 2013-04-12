@@ -85,4 +85,12 @@ public class Usuario {
 		return false;
 	}
 
+    public boolean ehAdmin() {
+        return Perfil.ADM.equals(perfil);
+    }
+ 
+    public boolean ehUsu() {
+        return Perfil.USU.equals(perfil);
+    }	
+	
 }

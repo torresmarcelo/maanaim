@@ -7,7 +7,6 @@ import br.com.maanaim.model.Usuario;
  
 public class UsuarioDAO extends GenericDAO<Usuario> {
  
-    @SuppressWarnings("unused")
 	private static final long serialVersionUID = 1L;
  
     public UsuarioDAO() {
