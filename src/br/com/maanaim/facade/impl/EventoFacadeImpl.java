@@ -1,22 +1,30 @@
-package br.com.maanaim.facade;
- 
+package br.com.maanaim.facade.impl;
+
 import java.util.List;
 
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+
 import br.com.maanaim.dao.impl.EventoDAO;
+import br.com.maanaim.facade.GenericFacade;
 import br.com.maanaim.model.Evento;
- 
-public class EventoFacade {
-    private static final long serialVersionUID = 1L;
-    
-    private EventoDAO evtDAO = new EventoDAO();
- 
-    public void createEvento(Evento evt) {
+
+@Stateless
+public class EventoFacadeImpl implements GenericFacade<Evento> {
+	
+    @EJB
+    private EventoDAO evtDAO;
+
+
+	@Override
+	public void save(Evento evt) {
         evtDAO.beginTransaction();
         evtDAO.save(evt);
         evtDAO.commitAndCloseTransaction();
-    }
- 
-    public void updateEvento(Evento evt) {
+	}
+
+	@Override
+	public Evento update(Evento evt) {
         evtDAO.beginTransaction();
         Evento persistedEvento = evtDAO.find(evt.getId());
         persistedEvento.setNome(evt.getNome());
@@ -27,26 +35,34 @@ public class EventoFacade {
         
         evtDAO.update(persistedEvento);
         evtDAO.commitAndCloseTransaction();
-    }
- 
-    public Evento findEvento(int evtId) {
-        evtDAO.beginTransaction();
-        Evento evt = evtDAO.find(evtId);
-        evtDAO.closeTransaction();
-        return evt;
-    }
- 
-    public List<Evento> listAll() {
-        evtDAO.beginTransaction();
-        List<Evento> result = evtDAO.findAll();
-        evtDAO.closeTransaction();
-        return result;
-    }
- 
-    public void deleteEvento(Evento evt) {
+		
+		
+		return evt;
+	}
+
+	@Override
+	public void delete(Evento evt) {
         evtDAO.beginTransaction();
         Evento persistedEvento = evtDAO.findReferenceOnly(evt.getId());
         evtDAO.delete(persistedEvento);
         evtDAO.commitAndCloseTransaction();
-    }
+	}
+
+	@Override
+	public Evento find(int evtId) {
+        evtDAO.beginTransaction();
+        Evento evt = evtDAO.find(evtId);
+        evtDAO.closeTransaction();
+        return evt;
+	}
+
+	@Override
+	public List<Evento> findAll() {
+        evtDAO.beginTransaction();
+        List<Evento> result = evtDAO.findAll();
+        evtDAO.closeTransaction();
+        return result;
+	}
+
+
 }
