@@ -1,7 +1,8 @@
-package br.com.maanaim.dao;
+package br.com.maanaim.dao.impl;
 import java.util.HashMap;
 import java.util.Map;
 
+import br.com.maanaim.dao.GenericDAO;
 import br.com.maanaim.model.Usuario;
  
 public class UsuarioDAO extends GenericDAO<Usuario> {
